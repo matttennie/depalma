@@ -13,6 +13,11 @@ Inspired by [TouchGuard](https://github.com/thesyntaxinator/TouchGuard) by [Prag
 - does not block pointer movement
 - does not block keyboard input
 
+| State | Icon | Function |
+| --- | --- | --- |
+| Off | <img src="Resources/Icons/trackpad_on.png" alt="TouchGuard off icon" width="18"> | clicks work normally |
+| On | <img src="Resources/Icons/trackpad_off.png" alt="TouchGuard on icon" width="18"> | clicks are blocked |
+
 ## Build
 
 ```bash
@@ -45,8 +50,11 @@ Grant both to `/Applications/TouchGuard.app` if macOS prompts.
 - tap the Touch Bar button or use the menu bar item to toggle Click Guard
 - when Click Guard is on, clicks are blocked
 - when Click Guard is off, clicks work normally
+- when the Mac sleeps or wakes, Click Guard is forced off
+- on a fresh launch, login, or reboot, TouchGuard starts with Click Guard off
 
 ## Notes
 
 - this is a click blocker, not a full trackpad disable tool
+- when installed in `/Applications`, TouchGuard registers itself to launch at login by default
 - if macOS cannot distinguish your devices at the event-tap level, external mouse clicks may also be blocked while Click Guard is on

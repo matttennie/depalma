@@ -1,4 +1,5 @@
 import AppKit
+import ServiceManagement
 import TouchBarSupport
 
 @MainActor
@@ -14,18 +15,23 @@ final class AppController: NSObject, NSApplicationDelegate {
     private static let touchBarIdentifier = NSTouchBarItem.Identifier("com.matttennie.TouchGuard.controlstrip")
     private var touchBarItem: NSCustomTouchBarItem?
     private var touchBarButton: NSButton?
+    private var lifecycleObservers: [NSObjectProtocol] = []
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)
 
+        registerForLaunchAtLoginIfPossible()
         setupMenuBar()
         setupTouchBar()
         setupCallbacks()
+        setupLifecycleObservers()
+        clickBlockController.stop()
         render()
     }
 
     func applicationWillTerminate(_ notification: Notification) {
         clickBlockController.stop()
+        removeLifecycleObservers()
         removeTouchBar()
     }
 
@@ -90,6 +96,50 @@ final class AppController: NSObject, NSApplicationDelegate {
             guard let self else { return }
             self.currentState = state
             self.render()
+        }
+    }
+
+    private func setupLifecycleObservers() {
+        let center = NSWorkspace.shared.notificationCenter
+
+        lifecycleObservers.append(
+            center.addObserver(
+                forName: NSWorkspace.willSleepNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                Task { @MainActor in
+                    self?.clickBlockController.stop()
+                }
+            }
+        )
+
+        lifecycleObservers.append(
+            center.addObserver(
+                forName: NSWorkspace.didWakeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                Task { @MainActor in
+                    self?.clickBlockController.stop()
+                }
+            }
+        )
+    }
+
+    private func removeLifecycleObservers() {
+        let center = NSWorkspace.shared.notificationCenter
+        for observer in lifecycleObservers {
+            center.removeObserver(observer)
+        }
+        lifecycleObservers.removeAll()
+    }
+
+    private func registerForLaunchAtLoginIfPossible() {
+        guard #available(macOS 13.0, *) else { return }
+        guard Bundle.main.bundleURL.path.hasPrefix("/Applications/") else { return }
+        if SMAppService.mainApp.status != .enabled {
+            try? SMAppService.mainApp.register()
         }
     }
 
