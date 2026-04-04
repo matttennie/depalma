@@ -1,32 +1,52 @@
 # TouchGuard
 
-Disables Mac touchpad for a user-specified amount of time each time a key is pressed on the keyboard. This prevents accidental touchpad input (e.g. palm of hand moving over the edge of the touchpad) from being detected as a tap and causing the cursor to jump to a different line while the user is typing.
+TouchGuard is a small macOS menu bar and Touch Bar utility that blocks click events while it is on. Pointer movement still works. Keyboard input is untouched.
 
-**Download latest release from [here](https://github.com/thesyntaxinator/TouchGuard/releases)**
+It exists for the specific case where accidental trackpad taps or clicks steal focus while you are typing.
 
-*NOTE: Must be run with administrative privileges.*
+Inspired by [TouchGuard](https://github.com/thesyntaxinator/TouchGuard) by [Prag](https://github.com/thesyntaxinator).
 
-----------------
-## Usage (non-tech savvy)
-- Open Terminal, type "chmod +x ", drag the drop the downloaded file into the Terminal window, and press enter (this only needs to be done once after downloading the file).
-- Then type "sudo", drag and drop the downloaded file into the Terminal window, type " -time 0.2" and press enter. You may be prompted for your password; if so, type it and presss enter. Note that you will not see the cursor move while typing your password -- this is normal and done for security reasons.
-- Keep the terminal window open. If you close the window, the program will exit. You can hide the window by typing "command-h".
-- You will need to manually relaunch the app each time you restart your computer using the above sequence of steps. To auto-start after you restart your computer, see an unofficial extension of the project at <a href="https://github.com/amanagr/TouchGuard" target="_blank">amanagr/TouchGuard</a>.
+## What It Does
 
-------------------
-## Sample command line usage (for the more tech-savvy)
-```
-# make the downloaded release file executable
-chmod +x TouchGuard
-# run it
-sudo ./TouchGuard -time 0.2
+- `On`: blocks left, right, and other mouse click down/up events
+- `Off`: allows clicks normally
+- does not block pointer movement
+- does not block keyboard input
+
+## Build
+
+```bash
+./build.sh
 ```
 
-The above launches TouchGuard with a time interval of 200 ms (disables the touchpad for 200 ms each time a key is pressed on the keyboard). I have found this to be effective for me -- if you are still having issues (e.g. you can't use the trackpad immediately after typing, or your cursor still jumps), you can adjust the time interval up or down as needed.
+The built app lands at:
 
-*Note: You will need to manually relaunch the app each time you restart your computer. A future goal is to create an installer with an option to automatically run the program (with elevated privileges) every time the computer starts. If you would like to work on this, feel free to fork the project and let me know if you get it working (see contact info under "Support" below).*
+```bash
+build-app/Build/Products/DEBUG/TouchGuard.app
+```
 
-----------------
-## Support
-Questions? Comments? Feedback? Issues? Open a new issue [here](https://github.com/thesyntaxinator/TouchGuard/issues) or email syntaxsoftsupport@icloud.com.
+To install it to `/Applications`:
 
+```bash
+./build.sh --install
+```
+
+## First Run
+
+TouchGuard needs:
+
+- `Accessibility`
+- `Input Monitoring`
+
+Grant both to `/Applications/TouchGuard.app` if macOS prompts.
+
+## Use
+
+- tap the Touch Bar button or use the menu bar item to toggle Click Guard
+- when Click Guard is on, clicks are blocked
+- when Click Guard is off, clicks work normally
+
+## Notes
+
+- this is a click blocker, not a full trackpad disable tool
+- if macOS cannot distinguish your devices at the event-tap level, external mouse clicks may also be blocked while Click Guard is on
