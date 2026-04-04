@@ -108,9 +108,9 @@ final class AppController: NSObject, NSApplicationDelegate {
         let fileName: String
         switch currentState {
         case .disabled:
-            fileName = "trackpad_off"
-        case .enabled:
             fileName = "trackpad_on"
+        case .enabled:
+            fileName = "trackpad_off"
         }
 
         if let url = Bundle.main.resourceURL?.appendingPathComponent("Icons/\(fileName).png"),
