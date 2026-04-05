@@ -36,7 +36,7 @@ fi
 swift build -c "$CONFIGURATION"
 BIN_PATH="$(swift build -c "$CONFIGURATION" --show-bin-path)"
 
-APP_DIR="$BUILD_DIR/Build/Products/${CONFIGURATION:u}/TouchGuard.app"
+APP_DIR="$BUILD_DIR/Build/Products/${CONFIGURATION:u}/depalma.app"
 CONTENTS_DIR="$APP_DIR/Contents"
 MACOS_DIR="$CONTENTS_DIR/MacOS"
 RESOURCES_DIR="$CONTENTS_DIR/Resources"
@@ -44,11 +44,11 @@ RESOURCES_DIR="$CONTENTS_DIR/Resources"
 rm -rf "$APP_DIR"
 mkdir -p "$MACOS_DIR" "$RESOURCES_DIR"
 
-cp "$BIN_PATH/TouchGuardApp" "$MACOS_DIR/TouchGuard"
+cp "$BIN_PATH/depalma" "$MACOS_DIR/depalma"
 cp "$ROOT_DIR/Resources/Info.plist" "$CONTENTS_DIR/Info.plist"
 cp -R "$ROOT_DIR/Resources/Icons" "$RESOURCES_DIR/Icons"
 
-IDENTITY="$(security find-identity -v -p codesigning | awk -F '\"' '/Apple Development:/ {print $2; exit}')"
+IDENTITY="${DEPALMA_CODESIGN_IDENTITY:-}"
 if [[ -n "$IDENTITY" ]]; then
   echo "Signing with: $IDENTITY"
   codesign --force --deep --sign "$IDENTITY" "$APP_DIR"
@@ -61,8 +61,8 @@ echo "Built app:"
 echo "$APP_DIR"
 
 if [[ "$INSTALL_APP" -eq 1 ]]; then
-  rm -rf /Applications/TouchGuard.app
-  cp -R "$APP_DIR" /Applications/TouchGuard.app
+  rm -rf /Applications/depalma.app
+  cp -R "$APP_DIR" /Applications/depalma.app
   echo "Installed app:"
-  echo "/Applications/TouchGuard.app"
+  echo "/Applications/depalma.app"
 fi

@@ -55,15 +55,15 @@ extension PermissionIssue: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .missingAccessibility:
-            return "TouchGuard needs Accessibility permission to filter click events."
+            return "depalma needs Accessibility permission to filter click events."
         case .missingInputMonitoring:
-            return "TouchGuard needs Input Monitoring permission to observe the click stream."
+            return "depalma needs Input Monitoring permission to observe the click stream."
         case .missingBoth:
-            return "TouchGuard needs both Accessibility and Input Monitoring permissions."
+            return "depalma needs both Accessibility and Input Monitoring permissions."
         }
     }
 
     var recoverySuggestion: String? {
-        "Grant the requested permissions in System Settings, then relaunch TouchGuard and toggle it on again."
+        "Grant the requested permissions in System Settings, then relaunch depalma and toggle it on again."
     }
 }

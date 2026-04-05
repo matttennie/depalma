@@ -1,5 +1,4 @@
 import AppKit
-import ServiceManagement
 import TouchBarSupport
 
 @MainActor
@@ -12,7 +11,7 @@ final class AppController: NSObject, NSApplicationDelegate {
     private var toggleMenuItem: NSMenuItem?
     private var statusMenuItem: NSMenuItem?
 
-    private static let touchBarIdentifier = NSTouchBarItem.Identifier("com.matttennie.TouchGuard.controlstrip")
+    private static let touchBarIdentifier = NSTouchBarItem.Identifier("com.matttennie.depalma.controlstrip")
     private var touchBarItem: NSCustomTouchBarItem?
     private var touchBarButton: NSButton?
     private var lifecycleObservers: [NSObjectProtocol] = []
@@ -20,7 +19,6 @@ final class AppController: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)
 
-        registerForLaunchAtLoginIfPossible()
         setupMenuBar()
         setupTouchBar()
         setupCallbacks()
@@ -59,7 +57,7 @@ final class AppController: NSObject, NSApplicationDelegate {
 
         menu.addItem(.separator())
 
-        let quitItem = NSMenuItem(title: "Quit TouchGuard", action: #selector(quit), keyEquivalent: "q")
+        let quitItem = NSMenuItem(title: "Quit depalma", action: #selector(quit), keyEquivalent: "q")
         quitItem.target = self
         menu.addItem(quitItem)
 
@@ -135,14 +133,6 @@ final class AppController: NSObject, NSApplicationDelegate {
         lifecycleObservers.removeAll()
     }
 
-    private func registerForLaunchAtLoginIfPossible() {
-        guard #available(macOS 13.0, *) else { return }
-        guard Bundle.main.bundleURL.path.hasPrefix("/Applications/") else { return }
-        if SMAppService.mainApp.status != .enabled {
-            try? SMAppService.mainApp.register()
-        }
-    }
-
     private func render() {
         let presentation = ClickGuardPresenter.makePresentation(for: currentState)
         toggleMenuItem?.title = presentation.toggleTitle
@@ -158,9 +148,9 @@ final class AppController: NSObject, NSApplicationDelegate {
         let fileName: String
         switch currentState {
         case .disabled:
-            fileName = "trackpad_on"
+            fileName = "depalma_off"
         case .enabled:
-            fileName = "trackpad_off"
+            fileName = "depalma_on"
         }
 
         if let url = Bundle.main.resourceURL?.appendingPathComponent("Icons/\(fileName).png"),
@@ -193,7 +183,7 @@ final class AppController: NSObject, NSApplicationDelegate {
     private func presentPermissionAlert(for error: Error) {
         let alert = NSAlert()
         alert.alertStyle = .warning
-        alert.messageText = "TouchGuard Needs Permission"
+        alert.messageText = "depalma Needs Permission"
         alert.informativeText = [error.localizedDescription, (error as? LocalizedError)?.recoverySuggestion].compactMap { $0 }.joined(separator: "\n\n")
         alert.addButton(withTitle: "Open Settings")
         alert.addButton(withTitle: "Cancel")

@@ -1,6 +1,6 @@
 import ApplicationServices
 import XCTest
-@testable import TouchGuardApp
+@testable import depalma
 
 final class ClickEventClassifierTests: XCTestCase {
     func testBlocksOnlyClickDownAndUpEvents() {

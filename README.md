@@ -1,10 +1,13 @@
-# TouchGuard
+# depalma
 
-TouchGuard is a small macOS menu bar and Touch Bar utility that blocks click events while it is on. Pointer movement still works. Keyboard input is untouched.
+depalma is a small macOS menu bar and Touch Bar utility that blocks click events while it is on. Pointer movement still works. Keyboard input is untouched.
 
 It exists for the specific case where accidental trackpad taps or clicks steal focus while you are typing.
 
 Inspired by [TouchGuard](https://github.com/thesyntaxinator/TouchGuard) by [Prag](https://github.com/thesyntaxinator).
+Current fork and depalma adaptation by Matthew Tennie.
+
+This is a narrow macOS utility for people who are comfortable building local code, granting `Accessibility` and `Input Monitoring`, and accepting that it relies on private Touch Bar APIs. It is not positioned as a polished or broadly supported end-user app.
 
 ## What It Does
 
@@ -15,8 +18,8 @@ Inspired by [TouchGuard](https://github.com/thesyntaxinator/TouchGuard) by [Prag
 
 | State | Icon | Function |
 | --- | --- | --- |
-| Off | <img src="Resources/Icons/trackpad_on.png" alt="TouchGuard off icon" width="18"> | clicks work normally |
-| On | <img src="Resources/Icons/trackpad_off.png" alt="TouchGuard on icon" width="18"> | clicks are blocked |
+| Off | <img src="Resources/Icons/depalma_off.png" alt="depalma off icon" width="18"> | clicks work normally |
+| On | <img src="Resources/Icons/depalma_on.png" alt="depalma on icon" width="18"> | clicks are blocked |
 
 ## Build
 
@@ -27,7 +30,7 @@ Inspired by [TouchGuard](https://github.com/thesyntaxinator/TouchGuard) by [Prag
 The built app lands at:
 
 ```bash
-build-app/Build/Products/DEBUG/TouchGuard.app
+build-app/Build/Products/DEBUG/depalma.app
 ```
 
 To install it to `/Applications`:
@@ -36,14 +39,26 @@ To install it to `/Applications`:
 ./build.sh --install
 ```
 
+To sign with your own Apple Development identity instead of ad hoc signing:
+
+```bash
+DEPALMA_CODESIGN_IDENTITY="Apple Development: Your Name (TEAMID)" ./build.sh --install
+```
+
 ## First Run
 
-TouchGuard needs:
+depalma needs:
 
 - `Accessibility`
 - `Input Monitoring`
 
-Grant both to `/Applications/TouchGuard.app` if macOS prompts.
+Grant both to `/Applications/depalma.app` if macOS prompts.
+
+If you want it available at login, open Login Items and add `/Applications/depalma.app` yourself:
+
+```bash
+open "x-apple.systempreferences:com.apple.LoginItems-Settings.extension"
+```
 
 ## Use
 
@@ -51,10 +66,16 @@ Grant both to `/Applications/TouchGuard.app` if macOS prompts.
 - when Click Guard is on, clicks are blocked
 - when Click Guard is off, clicks work normally
 - when the Mac sleeps or wakes, Click Guard is forced off
-- on a fresh launch, login, or reboot, TouchGuard starts with Click Guard off
+- on a fresh launch, login, or reboot, depalma starts with Click Guard off
 
 ## Notes
 
 - this is a click blocker, not a full trackpad disable tool
-- when installed in `/Applications`, TouchGuard registers itself to launch at login by default
 - if macOS cannot distinguish your devices at the event-tap level, external mouse clicks may also be blocked while Click Guard is on
+- the repo supports the Swift package build path documented above; older exploratory tooling was removed on purpose
+
+## Project Files
+
+- [AUTHORS.md](AUTHORS.md)
+- [LICENSE](LICENSE)
+- [SECURITY.md](SECURITY.md)

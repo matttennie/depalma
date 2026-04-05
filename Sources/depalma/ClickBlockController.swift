@@ -104,7 +104,7 @@ enum ClickBlockError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .tapCreationFailed:
-            return "macOS did not allow TouchGuard to create a click-filter event tap."
+            return "macOS did not allow depalma to create a click-filter event tap."
         }
     }
 }

@@ -2,12 +2,12 @@
 import PackageDescription
 
 let package = Package(
-    name: "TouchGuard",
+    name: "depalma",
     platforms: [
         .macOS(.v13)
     ],
     products: [
-        .executable(name: "TouchGuardApp", targets: ["TouchGuardApp"])
+        .executable(name: "depalma", targets: ["depalma"])
     ],
     targets: [
         .target(
@@ -15,12 +15,12 @@ let package = Package(
             publicHeadersPath: "include"
         ),
         .executableTarget(
-            name: "TouchGuardApp",
+            name: "depalma",
             dependencies: ["TouchBarSupport"]
         ),
         .testTarget(
-            name: "TouchGuardAppTests",
-            dependencies: ["TouchGuardApp"]
+            name: "depalmaTests",
+            dependencies: ["depalma"]
         )
     ]
 )
