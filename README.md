@@ -4,8 +4,8 @@ depalma is a small macOS menu bar and Touch Bar utility that blocks click events
 
 It exists for the specific case where accidental trackpad taps or clicks steal focus while you are typing.
 
-Inspired by [TouchGuard](https://github.com/thesyntaxinator/TouchGuard) by [Prag](https://github.com/thesyntaxinator).
-Current fork and depalma adaptation by Matthew Tennie.
+depalma is an independent current implementation by Matthew Tennie.
+It was inspired by the original idea explored in [TouchGuard](https://github.com/thesyntaxinator/TouchGuard) by [Prag](https://github.com/thesyntaxinator).
 
 This is a narrow macOS utility for people who are comfortable building local code, granting `Accessibility` and `Input Monitoring`, and accepting that it relies on private Touch Bar APIs. It is not positioned as a polished or broadly supported end-user app.
 
