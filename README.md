@@ -8,6 +8,7 @@ depalma is an independent current implementation by Matthew Tennie.
 It was inspired by the original idea explored in [TouchGuard](https://github.com/thesyntaxinator/TouchGuard) by [Prag](https://github.com/thesyntaxinator).
 
 This is a narrow macOS utility for people who are comfortable building local code, granting `Accessibility` and `Input Monitoring`, and accepting that it relies on private Touch Bar APIs. It is not positioned as a polished or broadly supported end-user app.
+It does not phone home, bundle telemetry, or install any privileged helper.
 
 ## What It Does
 
@@ -77,5 +78,7 @@ open "x-apple.systempreferences:com.apple.LoginItems-Settings.extension"
 ## Project Files
 
 - [AUTHORS.md](AUTHORS.md)
+- [CONTRIBUTING.md](CONTRIBUTING.md)
 - [LICENSE](LICENSE)
+- [PRIVACY.md](PRIVACY.md)
 - [SECURITY.md](SECURITY.md)

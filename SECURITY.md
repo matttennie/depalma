@@ -8,6 +8,8 @@
 - requires `Input Monitoring`
 - uses a private Touch Bar API surface
 - intentionally intercepts and suppresses click events while enabled
+- does not use network services or a privileged helper
+- does not register itself as a login item
 
 If that trust model is not acceptable for your environment, do not run it.
 
@@ -31,6 +33,13 @@ Please include:
 - whether the app was ad hoc signed or signed with `DEPALMA_CODESIGN_IDENTITY`
 - exact reproduction steps
 - whether the issue affects click filtering, permissions, persistence, or packaging
+
+## Operational Safety
+
+- fresh launch starts with Click Guard off
+- sleep and wake force Click Guard off
+- quit forces Click Guard off
+- login startup is user-controlled through macOS Login Items
 
 ## Non-Goals
 
