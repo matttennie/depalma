@@ -7,6 +7,8 @@
 - `Accessibility`, so it can filter click events
 - `Input Monitoring`, so it can observe the click stream
 
+These permissions are granted once in System Settings and persist across reboots when the app is signed with an Apple Development certificate. After granting Input Monitoring for the first time, quit and relaunch depalma.
+
 ## What It Does Not Do
 
 - no network access by design

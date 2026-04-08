@@ -48,12 +48,22 @@ cp "$BIN_PATH/depalma" "$MACOS_DIR/depalma"
 cp "$ROOT_DIR/Resources/Info.plist" "$CONTENTS_DIR/Info.plist"
 cp -R "$ROOT_DIR/Resources/Icons" "$RESOURCES_DIR/Icons"
 
+ENTITLEMENTS="$ROOT_DIR/Resources/depalma.entitlements"
+
+# Default to the first valid Apple Development identity when no override is set
 IDENTITY="${DEPALMA_CODESIGN_IDENTITY:-}"
+if [[ -z "$IDENTITY" ]]; then
+  IDENTITY=$(security find-identity -v -p codesigning | grep "Apple Development" | head -1 | sed 's/.*"\(.*\)".*/\1/')
+fi
+
 if [[ -n "$IDENTITY" ]]; then
   echo "Signing with: $IDENTITY"
-  codesign --force --deep --sign "$IDENTITY" "$APP_DIR"
+  codesign --force --deep \
+    --entitlements "$ENTITLEMENTS" \
+    --sign "$IDENTITY" "$APP_DIR"
 else
-  echo "Signing ad hoc"
+  echo "WARNING: No Apple Development certificate found. Signing ad hoc."
+  echo "TCC permissions (Accessibility, Input Monitoring) will NOT persist across reboots."
   codesign --force --deep --sign - "$APP_DIR"
 fi
 

@@ -16,7 +16,7 @@ Before sending changes:
 ./build.sh
 ```
 
-That path runs the current tests before building the app bundle.
+That path runs the current tests before building the app bundle. The build script auto-detects an Apple Development certificate for signing. If you do not have one, the app will be ad hoc signed and TCC permissions will not persist across reboots.
 
 ## Review Standard
 

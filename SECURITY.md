@@ -21,6 +21,8 @@ The only supported build path is:
 ./build.sh
 ```
 
+The build script auto-detects an Apple Development certificate for code signing. Proper signing is required for macOS to persist TCC (Accessibility and Input Monitoring) grants across reboots. The app is signed with the entitlements defined in `Resources/depalma.entitlements`.
+
 Older exploratory scripts and alternate build paths were removed on purpose.
 
 ## Reporting
@@ -30,7 +32,7 @@ If you find a security issue in the current code, open a GitHub issue or a GitHu
 Please include:
 
 - macOS version
-- whether the app was ad hoc signed or signed with `DEPALMA_CODESIGN_IDENTITY`
+- whether the app was signed with an Apple Development certificate or ad hoc
 - exact reproduction steps
 - whether the issue affects click filtering, permissions, persistence, or packaging
 

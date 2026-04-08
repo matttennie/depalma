@@ -40,11 +40,19 @@ To install it to `/Applications`:
 ./build.sh --install
 ```
 
-To sign with your own Apple Development identity instead of ad hoc signing:
+## Code Signing
+
+The build script auto-detects your Apple Development certificate and signs with it. Proper code signing is required for macOS to persist Accessibility and Input Monitoring permissions across reboots.
+
+If no Apple Development certificate is found, the build falls back to ad hoc signing with a warning. Ad hoc signing works but TCC permissions will not survive a reboot.
+
+To override the auto-detected identity:
 
 ```bash
 DEPALMA_CODESIGN_IDENTITY="Apple Development: Your Name (TEAMID)" ./build.sh --install
 ```
+
+The app is signed with the entitlements in `Resources/depalma.entitlements`.
 
 ## First Run
 
@@ -53,7 +61,7 @@ depalma needs:
 - `Accessibility`
 - `Input Monitoring`
 
-Grant both to `/Applications/depalma.app` if macOS prompts.
+Grant both to `/Applications/depalma.app` in System Settings. After granting Input Monitoring, quit and relaunch depalma — macOS does not pick up that permission change in a running process.
 
 If you want it available at login, open Login Items and add `/Applications/depalma.app` yourself:
 
@@ -73,6 +81,7 @@ open "x-apple.systempreferences:com.apple.LoginItems-Settings.extension"
 
 - this is a click blocker, not a full trackpad disable tool
 - if macOS cannot distinguish your devices at the event-tap level, external mouse clicks may also be blocked while Click Guard is on
+- permissions persist across reboots when the app is signed with an Apple Development certificate
 - the repo supports the Swift package build path documented above; older exploratory tooling was removed on purpose
 
 ## Project Files
